@@ -20,12 +20,30 @@ public class Main {
 
                 switch (taskNum) {
                     case 1:
+                        Box<Object> box = new Box<>();
                         do {
+                            System.out.println("Выберите действие: 1 - положить объект, 2 - забрать объект");
+                            System.out.println("3 - проверить на заполненность");
+
                             choice = sc.nextInt();
                             switch (choice) {
                                 case 1:
+                                    System.out.println("Введите значение: ");
+                                    sc.nextLine();
+                                    Object object = sc.nextLine();
+                                    box.setValue(object);
                                     break;
-
+                                case 2:
+                                    Object returnObject = box.getValue();
+                                    System.out.println("Вы забрали: " + returnObject);
+                                    break;
+                                case 3:
+                                    if (box.isFilled()){
+                                        System.out.println("В коробке что-то есть");
+                                    } else {
+                                        System.out.println("Коробка пуста");
+                                    }
+                                    break;
                                 case -1:
                                     System.out.println("Выход...");
                                     break;
@@ -81,7 +99,7 @@ public class Main {
 
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Ошибка: введено не число");
+                System.out.println("Ошибка: введено некорректное значение");
                 return;
             }
         } while (taskNum != -1);
