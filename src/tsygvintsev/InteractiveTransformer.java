@@ -1,5 +1,6 @@
 package tsygvintsev;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +29,9 @@ public class InteractiveTransformer {
         });
 
         return newList;
+    }
+
+    public static List<Integer> maximumFromArrays(List<Integer[]> list) {
+        return null;
     }
 }

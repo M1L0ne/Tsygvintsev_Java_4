@@ -1,5 +1,6 @@
 package tsygvintsev;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
@@ -49,7 +50,9 @@ public class Main {
                         int arrayLen;
                         List<String> strList = new ArrayList<>();
                         List<Integer> intList = new ArrayList<>();
-                        List<Arrays> arrList = new ArrayList<>();
+                        String[] arrString;
+                        Integer[] arrInteger;
+                        List<Integer[]> arrList = new ArrayList<>();
                         List<Integer> newList;
                         do {
                             System.out.println("Выберите действие: 1 - перевести строки в их длину");
@@ -91,7 +94,24 @@ public class Main {
                                     }
                                     break;
                                 case 3:
-                                    System.out.println("Вводите м");
+                                    System.out.println("Введите кол-во массивов: ");
+                                    arrayLen = sc.nextInt();
+                                    System.out.println("Вводите в каждой строчке элементы массива:");
+                                    sc.nextLine();
+
+                                    for(int i = 0; i < arrayLen; i++) {
+                                        arrString = sc.nextLine().split(" ");
+
+                                        arrInteger = new Integer[arrString.length];
+
+                                        for(int j = 0; j < arrString.length; j++) {
+                                            arrInteger[j] = Integer.parseInt(arrString[j]);
+                                        }
+
+                                        arrList.add(arrInteger);
+                                    }
+
+                                    newList = InteractiveTransformer.maximumFromArrays(arrList);
                                     break;
                                 case -1:
                                     System.out.println("Выход...");
