@@ -75,7 +75,7 @@ public class Main {
                                         strList.add(sc.nextLine());
                                     }
 
-                                    newList = TypeTransformer.changeTypes(strList, str -> str.length());
+                                    newList = ListTransformer.changeTypes(strList, str -> str.length());
                                     System.out.println("Полученный список: ");
                                     for(Integer element : newList) {
                                         System.out.print(element + " ");
@@ -91,7 +91,7 @@ public class Main {
                                         intList.add(sc.nextInt());
                                     }
 
-                                    newList = TypeTransformer.changeTypes(intList, num -> Math.abs(num));
+                                    newList = ListTransformer.changeTypes(intList, num -> Math.abs(num));
                                     System.out.println("Полученный список: ");
                                     for (Integer element : newList) {
                                         System.out.print(element + " ");
@@ -120,7 +120,7 @@ public class Main {
                                         arrList.add(arrInteger);
                                     }
 
-                                    newList = TypeTransformer.changeTypes(arrList, value -> {
+                                    newList = ListTransformer.changeTypes(arrList, value -> {
                                         int max = Integer.MIN_VALUE;
 
                                         for (int i = 0; i < value.length; i++) {
@@ -249,6 +249,7 @@ public class Main {
 
                             switch (choice) {
                                 case 1:
+                                    String longString = "";
                                     System.out.println("Введите кол-во объектов в массиве: ");
                                     arrayLen = sc.nextInt();
                                     System.out.println("Вводите элементы массива через Enter:");
@@ -257,14 +258,12 @@ public class Main {
                                         strList.add(sc.nextLine());
                                     }
 
-                                    newStringList = ListFilter.filterList(strList, s -> s.length() < 3);
-                                    System.out.println("Полученный список: ");
-                                    for(String element : newStringList) {
-                                        System.out.print(element + " ");
-                                    }
+                                    longString = ListReduction.reduce(strList, (a, b) -> a + b, "");
+                                    System.out.println("Полученная строка: " + longString);
                                     System.out.println();
                                     break;
                                 case 2:
+                                    int numSum = 0;
                                     System.out.println("Введите кол-во объектов в массиве: ");
                                     arrayLen = sc.nextInt();
                                     System.out.println("Вводите элементы массива через Enter:");
@@ -273,14 +272,12 @@ public class Main {
                                         intList.add(sc.nextInt());
                                     }
 
-                                    newList = ListFilter.filterList(intList, n -> n > 0);
-                                    System.out.println("Полученный список: ");
-                                    for (Integer element : newList) {
-                                        System.out.print(element + " ");
-                                    }
+                                    numSum = ListReduction.reduce(intList, (a, b) -> a + b, 0);
+                                    System.out.println("Полученное число: " + numSum);
                                     System.out.println();
                                     break;
                                 case 3:
+                                    int elementCount = 0;
                                     System.out.println("Введите кол-во массивов: ");
                                     arrayLen = sc.nextInt();
                                     System.out.println("Вводите в каждой строчке элементы массива (целые числа):");
@@ -302,26 +299,9 @@ public class Main {
                                         arrList.add(arrInteger);
                                     }
 
-                                    newArrList = ListFilter.filterList(arrList, arr -> {
-                                        for (int element : arr) {
-                                            if (element < 0) {
-                                                return false;
-                                            }
-                                        }
-
-                                        return true;
-                                    });
-
-                                    System.out.println("Массивы без положительных элементов: ");
-                                    int arrNum = 0;
-                                    for (Integer[] arr : newArrList) {
-                                        arrNum++;
-                                        System.out.println("Массив " + arrNum + ":");
-                                        for (int i = 0; i < arr.length; i++) {
-                                            System.out.print(arr[i] + " ");
-                                        }
-                                        System.out.println();
-                                    }
+                                    List<Integer> listLenghts = ListTransformer.changeTypes(arrList, list -> list.length);
+                                    elementCount = ListReduction.reduce(listLenghts, (a, b) -> a + b, 0);
+                                    System.out.println("Кол-во элементов во всех списках: " + elementCount);
                                     break;
                                 case -1:
                                     System.out.println("Выход...");
@@ -331,9 +311,6 @@ public class Main {
                         } while (choice != -1);
                         break;
                     case 6:
-
-                        break;
-                    case 7:
 
                         break;
                     case -1:

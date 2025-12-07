@@ -5,13 +5,13 @@ import java.util.List;
 
 public class ListFilter {
     public static <T> List<T> filterList (List<T> list, Filter<T> filter){
-        List<T> newList = new ArrayList<>();
+        List<T> result = new ArrayList<>();
         for (T item : list) {
             if (filter.test(item)) {
-                newList.add(item);
+                result.add(item);
             }
         }
 
-        return newList;
+        return result;
     }
 }
