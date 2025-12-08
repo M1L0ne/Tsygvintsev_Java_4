@@ -186,20 +186,20 @@ public class Main {
                                 case 1:
                                     Map<String, List<Integer>> newMapList;
                                     newMapList = ListCollector.collect(
-                                        readIntegerList(),
-                                        () -> {
-                                            Map<String, List<Integer>> map = new HashMap<>();
-                                            map.put("positive", new ArrayList<>());
-                                            map.put("negative", new ArrayList<>());
-                                            return map;
-                                        },
-                                        (map, num) -> {
-                                            if (num > 0) {
-                                                map.get("positive").add(num);
-                                            } else if (num < 0) {
-                                                map.get("negative").add(num);
+                                            readIntegerList(),
+                                            () -> {
+                                                Map<String, List<Integer>> map = new HashMap<>();
+                                                map.put("positive", new ArrayList<>());
+                                                map.put("negative", new ArrayList<>());
+                                                return map;
+                                            },
+                                            (map, num) -> {
+                                                if (num > 0) {
+                                                    map.get("positive").add(num);
+                                                } else if (num < 0) {
+                                                    map.get("negative").add(num);
+                                                }
                                             }
-                                        }
                                     );
 
                                     System.out.println("Новый список: " + newMapList);
@@ -250,7 +250,7 @@ public class Main {
 
     }
 
-    public static Object boxes (int taskNum) {
+    public static Object boxes(int taskNum) {
         int choice;
         Box<Object> box = new Box<>();
         do {
@@ -266,8 +266,7 @@ public class Main {
                         String string = sc.nextLine();
                         double doubleString = Double.parseDouble(string);
                         box.setValue(doubleString);
-                    }
-                    else {
+                    } else {
                         Object object = sc.nextLine();
                         box.setValue(object);
                     }
