@@ -5,10 +5,9 @@ import java.util.*;
 public class Main {
     static Scanner sc = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         int choice;
-        int taskNum = 0;
-        int arrayLen = 0;
+        int taskNum;
         List<Integer> newList;
         List<String> newStringList;
         HashMap<Integer, List<String>> newMapStringList;
@@ -59,15 +58,15 @@ public class Main {
 
                             switch (choice) {
                                 case 1:
-                                    newList = ListTransformer.changeTypes(readStringList(), str -> str.length());
+                                    newList = ListFunction.changeTypes(readStringList(), str -> str.length());
                                     printIntegerList(newList);
                                     break;
                                 case 2:
-                                    newList = ListTransformer.changeTypes(readIntegerList(), num -> Math.abs(num));
+                                    newList = ListFunction.changeTypes(readIntegerList(), num -> Math.abs(num));
                                     printIntegerList(newList);
                                     break;
                                 case 3:
-                                    newList = ListTransformer.changeTypes(readArrList(), value -> {
+                                    newList = ListFunction.changeTypes(readArrList(), value -> {
                                         int max = Integer.MIN_VALUE;
 
                                         for (int i = 0; i < value.length; i++) {
@@ -99,7 +98,7 @@ public class Main {
                         do {
                             System.out.println("Выберите действие: 1 - отфильтровать строки длины меньше 3");
                             System.out.println("2 - отфильтровать положительные элементы");
-                            System.out.println("3 - отфильтровать положительные числы массивов");
+                            System.out.println("3 - отфильтровать массивы положительных чисел");
                             choice = sc.nextInt();
 
                             switch (choice) {
@@ -162,7 +161,7 @@ public class Main {
                                     break;
                                 case 3:
                                     int elementCount = 0;
-                                    List<Integer> listLengths = ListTransformer.changeTypes(readArrList(), list -> list.length);
+                                    List<Integer> listLengths = ListFunction.changeTypes(readArrList(), list -> list.length);
                                     elementCount = ListReduction.reduce(listLengths, (a, b) -> a + b, 0);
                                     System.out.println("Кол-во элементов во всех списках: " + elementCount);
                                     break;
@@ -263,9 +262,14 @@ public class Main {
                     System.out.println("Введите значение: ");
                     sc.nextLine();
                     if (taskNum == 2) {
-                        String string = sc.nextLine();
-                        double doubleString = Double.parseDouble(string);
-                        box.setValue(doubleString);
+                        try {
+                            String string = sc.nextLine();
+                            double doubleString = Double.parseDouble(string);
+                            box.setValue(doubleString);
+                        } catch (NumberFormatException exception) {
+                            System.out.println("Ошибка: введено не число.");
+                            break;
+                        }
                     } else {
                         Object object = sc.nextLine();
                         box.setValue(object);
@@ -310,7 +314,7 @@ public class Main {
     }
 
     public static List<String> readStringList() {
-        System.out.println("Введите кол-во чисел в массиве: ");
+        System.out.println("Введите кол-во строк в массиве: ");
         int arrayLen = sc.nextInt();
         System.out.println("Вводите элементы массива через Enter:");
         List<String> list = new ArrayList<>();
@@ -338,7 +342,9 @@ public class Main {
                     arrInteger[j] = Integer.parseInt(arrString[j]);
                 }
             } catch (NumberFormatException e) {
-                throw new RuntimeException("Ошибка: ведено не число.");
+                System.out.println("Ошибка: введено не число.");
+                System.out.println();
+                break;
             }
 
             arrList.add(arrInteger);

@@ -11,6 +11,7 @@ public class ListCollector {
         for (T item : list) {
             adder.add(result, item);
         }
+
         return result;
     }
 }
