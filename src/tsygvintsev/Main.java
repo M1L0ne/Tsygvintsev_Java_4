@@ -3,22 +3,16 @@ package tsygvintsev;
 import java.util.*;
 
 public class Main {
-    static int choice = 0;
-    static List<String> strList = new ArrayList<>();
-    static List<Integer> intList = new ArrayList<>();
-    static String[] arrString;
-    static Integer[] arrInteger;
-    static List<Integer[]> arrList = new ArrayList<>();
-    static List<Integer[]> newArrList = new ArrayList<>();
-    static List<Integer> newList = new ArrayList<>();
-    static List<String> newStringList = new ArrayList<>();
-    static Map<Integer, List<String>> newMapStringList = new HashMap<>();
-
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
+        int choice;
         int taskNum = 0;
         int arrayLen = 0;
+        List<Integer> newList;
+        List<String> newStringList;
+        HashMap<Integer, List<String>> newMapStringList;
+        List<Integer[]> newArrList;
 
         MaximumSearch maximumSearch = new MaximumSearch();
         System.out.println("Для перехода обратно в меню и выхода вводите '-1'");
@@ -28,7 +22,6 @@ public class Main {
             System.out.println("4 - Фильтр, 5 - Сокращение, 6 - Коллекционирование");
             try {
                 taskNum = sc.nextInt();
-
                 switch (taskNum) {
                     case 1:
                         boxes(1);
@@ -59,8 +52,6 @@ public class Main {
                         break;
                     case 3:
                         do {
-                            clearLists();
-
                             System.out.println("Выберите действие: 1 - перевести строки в их длину");
                             System.out.println("2 - поменять отрицательные числа на положительные");
                             System.out.println("3 - получить максимальные значения из массивов");
@@ -68,36 +59,12 @@ public class Main {
 
                             switch (choice) {
                                 case 1:
-                                    System.out.println("Введите кол-во чисел в массиве: ");
-                                    arrayLen = sc.nextInt();
-                                    System.out.println("Вводите элементы массива через Enter:");
-                                    sc.nextLine();
-                                    for(int i = 0; i < arrayLen; i++){
-                                        strList.add(sc.nextLine());
-                                    }
-
-                                    newList = ListTransformer.changeTypes(strList, str -> str.length());
-                                    System.out.println("Полученный список: ");
-                                    for(Integer element : newList) {
-                                        System.out.print(element + " ");
-                                    }
-                                    System.out.println();
+                                    newList = ListTransformer.changeTypes(readStringList(), str -> str.length());
+                                    printIntegerList(newList);
                                     break;
                                 case 2:
-                                    System.out.println("Введите кол-во строк в массиве: ");
-                                    arrayLen = sc.nextInt();
-                                    System.out.println("Вводите элементы массива через Enter:");
-                                    sc.nextLine();
-                                    for(int i = 0; i < arrayLen; i++){
-                                        intList.add(sc.nextInt());
-                                    }
-
-                                    newList = ListTransformer.changeTypes(intList, num -> Math.abs(num));
-                                    System.out.println("Полученный список: ");
-                                    for (Integer element : newList) {
-                                        System.out.print(element + " ");
-                                    }
-                                    System.out.println();
+                                    newList = ListTransformer.changeTypes(readIntegerList(), num -> Math.abs(num));
+                                    printIntegerList(newList);
                                     break;
                                 case 3:
                                     newList = ListTransformer.changeTypes(readArrList(), value -> {
@@ -121,15 +88,15 @@ public class Main {
                                     break;
                                 case -1:
                                     System.out.println("Выход...");
+                                    break;
                                 default:
                                     System.out.println("Ошибка: введено число вне диапазона");
+                                    break;
                             }
                         } while (choice != -1);
                         break;
                     case 4:
                         do {
-                            clearLists();
-
                             System.out.println("Выберите действие: 1 - отфильтровать строки длины меньше 3");
                             System.out.println("2 - отфильтровать положительные элементы");
                             System.out.println("3 - отфильтровать положительные числы массивов");
@@ -168,15 +135,15 @@ public class Main {
                                     break;
                                 case -1:
                                     System.out.println("Выход...");
+                                    break;
                                 default:
                                     System.out.println("Ошибка: введено число вне диапазона");
+                                    break;
                             }
                         } while (choice != -1);
                         break;
                     case 5:
                         do {
-                            clearLists();
-
                             System.out.println("Выберите действие: 1 - сформировать 1 строчку из нескольких");
                             System.out.println("2 - вернуть сумму значений списка");
                             System.out.println("3 - получить общее кол-во элементов в списке");
@@ -184,34 +151,32 @@ public class Main {
 
                             switch (choice) {
                                 case 1:
-                                    String longString = "";
-                                    longString = ListReduction.reduce(readStringList(), (a, b) -> a + b, "");
+                                    String longString = ListReduction.reduce(readStringList(), (a, b) -> a + b, "");
                                     System.out.println("Полученная строка: " + longString);
                                     System.out.println();
                                     break;
                                 case 2:
-                                    int numSum = 0;
-                                    numSum = ListReduction.reduce(readIntegerList(), (a, b) -> a + b, 0);
+                                    int numSum = ListReduction.reduce(readIntegerList(), (a, b) -> a + b, 0);
                                     System.out.println("Полученное число: " + numSum);
                                     System.out.println();
                                     break;
                                 case 3:
                                     int elementCount = 0;
-                                    List<Integer> listLenghts = ListTransformer.changeTypes(readArrList(), list -> list.length);
-                                    elementCount = ListReduction.reduce(listLenghts, (a, b) -> a + b, 0);
+                                    List<Integer> listLengths = ListTransformer.changeTypes(readArrList(), list -> list.length);
+                                    elementCount = ListReduction.reduce(listLengths, (a, b) -> a + b, 0);
                                     System.out.println("Кол-во элементов во всех списках: " + elementCount);
                                     break;
                                 case -1:
                                     System.out.println("Выход...");
+                                    break;
                                 default:
                                     System.out.println("Ошибка: введено число вне диапазона");
+                                    break;
                             }
                         } while (choice != -1);
                         break;
                     case 6:
                         do {
-                            clearLists();
-
                             System.out.println("Выберите действие: 1 - разбить список чисел на положительные и отрицательные");
                             System.out.println("2 - разбить список строк на одинаковые длины");
                             System.out.println("3 - получить список без повторений");
@@ -220,19 +185,22 @@ public class Main {
                             switch (choice) {
                                 case 1:
                                     Map<String, List<Integer>> newMapList;
-                                    newMapList = ListCollector.collect(readIntegerList(), () -> {
-                                        Map<String, List<Integer>> map = new HashMap<>();
-                                        map.put("positive", new ArrayList<>());
-                                        map.put("negative", new ArrayList<>());
-                                        return map;
-                                    },
-                                    (map, num) -> {
-                                        if (num > 0) {
-                                            map.get("positive").add(num);
-                                        } else if (num < 0){
-                                            map.get("negative").add(num);
+                                    newMapList = ListCollector.collect(
+                                        readIntegerList(),
+                                        () -> {
+                                            Map<String, List<Integer>> map = new HashMap<>();
+                                            map.put("positive", new ArrayList<>());
+                                            map.put("negative", new ArrayList<>());
+                                            return map;
+                                        },
+                                        (map, num) -> {
+                                            if (num > 0) {
+                                                map.get("positive").add(num);
+                                            } else if (num < 0) {
+                                                map.get("negative").add(num);
+                                            }
                                         }
-                                    });
+                                    );
 
                                     System.out.println("Новый список: " + newMapList);
                                     System.out.println();
@@ -259,8 +227,10 @@ public class Main {
                                     break;
                                 case -1:
                                     System.out.println("Выход...");
+                                    break;
                                 default:
                                     System.out.println("Ошибка: введено число вне диапазона");
+                                    break;
                             }
                         } while (choice != -1);
                         break;
@@ -281,6 +251,7 @@ public class Main {
     }
 
     public static Object boxes (int taskNum) {
+        int choice;
         Box<Object> box = new Box<>();
         do {
             System.out.println("Выберите действие: 1 - положить объект, 2 - забрать объект");
@@ -307,7 +278,7 @@ public class Main {
                     System.out.println();
                     break;
                 case 3:
-                    if (box.isFilled()){
+                    if (box.isFilled()) {
                         System.out.println("В коробке что-то есть");
                         System.out.println();
                     } else {
@@ -327,18 +298,6 @@ public class Main {
         return box;
     }
 
-    public static void clearLists() {
-        arrList.clear();
-        newArrList.clear();
-        newList.clear();
-        newStringList.clear();
-        strList.clear();
-        intList.clear();
-        newMapStringList.clear();
-        arrString = null;
-        arrInteger = null;
-    }
-
     public static List<Integer> readIntegerList() {
         System.out.println("Введите кол-во чисел в массиве: ");
         int arrayLen = sc.nextInt();
@@ -352,7 +311,6 @@ public class Main {
     }
 
     public static List<String> readStringList() {
-
         System.out.println("Введите кол-во чисел в массиве: ");
         int arrayLen = sc.nextInt();
         System.out.println("Вводите элементы массива через Enter:");
@@ -365,15 +323,16 @@ public class Main {
     }
 
     public static List<Integer[]> readArrList() {
+        List<Integer[]> arrList = new ArrayList<>();
         System.out.println("Введите кол-во массивов: ");
         int arrayLen = sc.nextInt();
         System.out.println("Вводите в каждой строчке элементы массива (целые числа):");
         sc.nextLine();
 
-        for(int i = 0; i < arrayLen; i++) {
-            arrString = sc.nextLine().split(" ");
+        for (int i = 0; i < arrayLen; i++) {
+            String[] arrString = sc.nextLine().split(" ");
 
-            arrInteger = new Integer[arrString.length];
+            Integer[] arrInteger = new Integer[arrString.length];
 
             try {
                 for (int j = 0; j < arrString.length; j++) {
@@ -391,7 +350,7 @@ public class Main {
 
     public static void printStringList(List<String> list) {
         System.out.println("Полученный список: ");
-        for(String element : list) {
+        for (String element : list) {
             System.out.print(element + " ");
         }
         System.out.println();
@@ -399,7 +358,7 @@ public class Main {
 
     public static void printIntegerList(List<Integer> list) {
         System.out.println("Полученный список: ");
-        for(Integer element : list) {
+        for (Integer element : list) {
             System.out.print(element + " ");
         }
         System.out.println();
